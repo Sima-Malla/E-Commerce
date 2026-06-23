@@ -1,67 +1,71 @@
-import logo from './logo.svg';
-import './App.css';
-import { Outlet } from 'react-router-dom';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { useEffect, useState } from 'react';
-import SummaryApi from './common';
-import Context from './context';
-import { useDispatch } from 'react-redux';
-import { setUserDetails } from './store/userSlice';
+import logo from "./logo.svg";
+import "./App.css";
+import { Outlet, useLocation } from "react-router-dom";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useEffect, useState } from "react";
+import SummaryApi from "./common";
+import Context from "./context";
+import { useDispatch } from "react-redux";
+import { setUserDetails } from "./store/userSlice";
 
 function App() {
-  const dispatch = useDispatch()
-  const [cartProductCount,setCartProductCount] = useState(0)
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
-  const fetchUserDetails = async()=>{
-      const dataResponse = await fetch(SummaryApi.current_user.url,{
-        method : SummaryApi.current_user.method,
-        credentials : 'include'
-      })
+  const dispatch = useDispatch();
+  const [cartProductCount, setCartProductCount] = useState(0);
 
-      const dataApi = await dataResponse.json()
+  const fetchUserDetails = async () => {
+    const dataResponse = await fetch(SummaryApi.current_user.url, {
+      method: SummaryApi.current_user.method,
+      credentials: "include",
+    });
 
-      if(dataApi.success){
-        dispatch(setUserDetails(dataApi.data))
-      }
-  }
+    const dataApi = await dataResponse.json();
 
-  const fetchUserAddToCart = async()=>{
-    const dataResponse = await fetch(SummaryApi.addToCartProductCount.url,{
-      method : SummaryApi.addToCartProductCount.method,
-      credentials : 'include'
-    })
+    if (dataApi.success) {
+      dispatch(setUserDetails(dataApi.data));
+    }
+  };
 
-    const dataApi = await dataResponse.json()
+  const fetchUserAddToCart = async () => {
+    const dataResponse = await fetch(SummaryApi.addToCartProductCount.url, {
+      method: SummaryApi.addToCartProductCount.method,
+      credentials: "include",
+    });
 
-    setCartProductCount(dataApi?.data?.count)
-  }
+    const dataApi = await dataResponse.json();
 
-  useEffect(()=>{
+    setCartProductCount(dataApi?.data?.count);
+  };
+
+  useEffect(() => {
     /**user Details */
-    fetchUserDetails()
+    fetchUserDetails();
     /**user Details cart product */
-    fetchUserAddToCart()
-
-  },[])
+    fetchUserAddToCart();
+  }, []);
   return (
     <>
-      <Context.Provider value={{
-          fetchUserDetails, // user detail fetch 
+      <Context.Provider
+        value={{
+          fetchUserDetails, // user detail fetch
           cartProductCount, // current user add to cart product count,
-          fetchUserAddToCart
-      }}>
-        <ToastContainer 
-          position='top-center'
-        />
-        
-        <Header/>
-        <main className='min-h-[calc(100vh-120px)] pt-16'>
-          <Outlet/>
+          fetchUserAddToCart,
+        }}
+      >
+        <ToastContainer position="top-center" />
+
+        <Header />
+        <main className="min-h-[calc(100vh-120px)] pt-16">
+          <Outlet />
         </main>
-        <Footer/>
+        <Footer />
       </Context.Provider>
     </>
   );

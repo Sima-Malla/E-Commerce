@@ -1,17 +1,11 @@
 const productCategory = [
-    { id : 1, label : "Airpodes", value : "airpodes"},
-    { id : 2, label : "Camera", value : "camera"},
-    { id : 3, label : "Earphones", value : "earphones"},
-    { id : 4, label : "Mobiles", value : "mobiles"},
-    { id : 5, label : "Mouse", value : "Mouse"},
-    { id : 6, label : "Printers", value : "printers"},
-    { id : 7, label : "Processor", value : "processor"},
-    { id : 8, label : "Refrigerator", value : "refrigerator"},
-    { id : 9, label : "Speakers", value : "speakers"},
-    { id : 10, label : "Trimmers", value : "trimmers"},
-    { id : 11, label : "Televisions", value : "televisions"},
-    { id : 12, label : "Watches", value : "watches"},
-]
+  { id: 1, label: "Men's Shoes", value: "men's shoes" },
+  { id: 2, label: "Women's Shoes", value: "women's shoes" },
+  { id: 3, label: "Kids' Shoes", value: "kids' shoes" },
+  { id: 4, label: "Sports", value: "sports" },
+  { id: 5, label: "Boots", value: "boots" },
+  { id: 6, label: "Formal & Office Wear", value: "formal & office wear" },
+  { id: 7, label: "Sandals & Slippers", value: "sandals & slippers" },
+];
 
-
-export default productCategory
+export default productCategory;
